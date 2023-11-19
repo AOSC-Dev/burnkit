@@ -1,0 +1,14 @@
+[Unit]
+Description=Run Memory Stability Test
+DefaultDependencies=no
+Before=sysinit.target multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/burnkit-memtest
+StandardOutput=tty
+StandardInput=tty
+StandardError=tty
+
+[Install]
+WantedBy=multi-user.target

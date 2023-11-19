@@ -1,0 +1,54 @@
+#!/bin/bash -e
+
+LOGFILE="/memtest-$(date +%s)"
+MEM_TEST_CAPACITY="$(echo $(awk '/MemFre/ { printf $2/1024 }' /proc/meminfo)*0.8 | bc)"
+
+source /usr/share/burnkit/lib.sh
+
+echo
+
+print_wintitle_normal "BurnKit: Memory Stability Test"
+print_winform_newline
+print_winform "stressapptest $(dpkg-query --showformat='${Version}' --show stressapptest)"
+print_winform_newline
+print_winform "- Testing ${MEM_TEST_CAPACITY} MiB of RAM, 80% of RAM currently available."
+print_winform "- Running benchmark for 24 hours."
+print_winform_newline
+
+echo
+
+print_wintitle_err "Caution"
+print_winform_newline
+print_winform "Please note that if the test fails, your system may freeze, display erratic"
+print_winform "images, or reset."
+print_winform_newline
+print_winform "If the test passes, you will see a summary screen."
+print_winform_newline
+
+echo
+
+read -p "Press [Enter] to begin testing ..."
+
+stressapptest \
+	-M ${MEM_TEST_CAPACITY} \
+	-s 1 \
+	| tee $LOGFILE
+
+echo
+
+print_wintitle_normal "BurnKit: Memory Stability Test"
+print_winform_newline
+print_winform "stressapptest $(dpkg-query --showformat='${Version}' --show stressapptest)"
+print_winform_newline
+print_winform "Test completed successfully using the following parameters:"
+print_winform_newline
+print_winform "- Tested ${MEM_TEST_CAPACITY} MiB of RAM, 80% of RAM currently available."
+print_winform "- Ran benchmark for 24 hours."
+print_winform_newline
+print_winform "Test log has been saved to: $LOGFILE"
+print_winform_newline
+
+echo
+
+read -p "Press [Enter] to restart your system ..."
+reboot
