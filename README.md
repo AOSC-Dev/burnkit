@@ -1,7 +1,7 @@
 BurnKit
 =======
 
-The BurnKit is a specialised AOSC OS release for system stability testing.
+The BurnKit is a specialised AOSC OS release for hardware stability testing.
 
 Components
 ----------
