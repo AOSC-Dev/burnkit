@@ -17,4 +17,4 @@ Dependencies
     - Bash
     - dpkg (for version checking)
 - memtest
-    - [stressapptest](https://github.com/AOSC-Dev/stressapptest)
+    - [stressapptest](https://github.com/stressapptest/stressapptest)
